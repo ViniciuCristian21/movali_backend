@@ -1,0 +1,31 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model Movies {
+  id              String @id @default(uuid())
+  title           String
+  description     String
+  classification  String
+  launched_in     String
+
+  @@map("movies")
+  Evaluation Evaluation[]
+}
+
+model Evaluation {
+  id                String @id @default(uuid())
+  note              Int
+  name              String
+  email             String
+
+  id_movie          String
+  movie             Movies @relation(fields: [id_movie], references: [id], onDelete: Cascade)
+
+  @@map("evaluations")
+}
